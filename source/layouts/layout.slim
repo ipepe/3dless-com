@@ -1,0 +1,37 @@
+doctype html
+html lang='en'
+  head
+    meta charset="utf-8"
+    meta name="language" content='en'
+    meta http-equiv="X-UA-Compatible" content="IE=edge"
+    meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width"
+    meta name="mobile-web-app-capable" content="yes"
+    meta name="apple-mobile-web-app-capable" content="yes"
+    / meta name="description" content="Awesome Description Here"
+    / meta name="keywords" content="HTML,CSS,XML,JavaScript"
+    - if current_page.data.title
+      title
+        = "3DLess.com | "
+        = current_page.data.title
+    - else
+      title = "3DLess.com | Online 3D Model Modification Tools"
+    == favicon_tag 'images/favicon.png'
+    == stylesheet_link_tag :application
+    == javascript_include_tag  :application
+  body
+    .container
+      nav.navbar.navbar-inverse.border-radius-0
+        .container-fluid
+          .navbar-header
+            button.navbar-toggle.collapsed data-target="#main-navbar" data-toggle="collapse" type="button"
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand rel="home" href='/'
+              img src="/images/cube-64.png" alt="logo"
+              span 3DLess.com
+          #main-navbar.collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li: a href="simplify.html" Reduce polygons
+      == yield
