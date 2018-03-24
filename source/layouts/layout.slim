@@ -7,8 +7,8 @@ html lang='en'
     meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width"
     meta name="mobile-web-app-capable" content="yes"
     meta name="apple-mobile-web-app-capable" content="yes"
-    / meta name="description" content="Awesome Description Here"
-    / meta name="keywords" content="HTML,CSS,XML,JavaScript"
+    meta name="description" content=(current_page.data.description || "3D modeling tools for STL for reducing vertice count")
+    meta name="keywords" content=(current_page.data.keywords || "3d,model,stl,obj,gcode,polygon,reduction,simplify,vertices")
     - if current_page.data.title
       title
         = "3DLess.com | "
@@ -20,7 +20,7 @@ html lang='en'
     == javascript_include_tag  :application
   body
     .container
-      nav.navbar.navbar-inverse.border-radius-0
+      nav.navbar.navbar-inverse
         .container-fluid
           .navbar-header
             button.navbar-toggle.collapsed data-target="#main-navbar" data-toggle="collapse" type="button"

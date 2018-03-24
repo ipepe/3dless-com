@@ -1,10 +1,18 @@
 ---
-title: Welcome to Middleman
+title: Reduce STL File vertices. Simplify 3D model Online.
 ---
-
-.welcome
-  .logo
-    == image_tag 'middleman-logo.svg'
-  h1 Middleman is Watching
-  p.doc
-    == link_to "Read Online Documentation", "http://middlemanapp.com/"
+== javascript_include_tag  :simplifier
+.jumbotron
+  h1 Hello, world!
+  p You can simplify Your STL model here. Simply choose a file, and specify vertices amount You wish to have and save file.
+.row
+  .col-md-12
+    .form-group
+      label for="file_input" STL Input file
+      input#file_input.form-control type="file"
+.row
+  - [:x, :y, :z].each do |axis|
+    .col-md-4
+      .form-group
+        label for="rotation_#{axis}" Rotation #{axis.to_s.upcase}
+        input.form-control type="number" id="rotation_#{axis}" value="0" min="-360" max="360" step="15"
