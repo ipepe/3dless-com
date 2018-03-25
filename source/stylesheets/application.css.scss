@@ -10,3 +10,11 @@
   width: auto;
   display: inline-block;
 }
+
+#threejs{
+  height: 80vh;
+  max-width: 90vw;
+  > canvas {
+    border-radius: 5px;
+  }
+}

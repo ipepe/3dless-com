@@ -1,0 +1,1 @@
+(function(){$().ready(function(){return new ThreejsSimplifier("#threejs")})}).call(this);
