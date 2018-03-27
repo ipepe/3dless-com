@@ -20,9 +20,13 @@ class window.ThreejsSimplifier
         @renderer.setSize(@width(), @height())
         @renderer.shadowMap.enabled = parseInt(navigator.hardwareConcurrency || '2') > 3
         @renderer.setClearColor(0x000000, 0)
+        @loadSTL()
         @setupCameraAndControls()
         @setupLight()
         @material = new THREE.MeshPhongMaterial(color: '#fff')
+        @animate()
+
+    loadSTL: ->
         new THREE.STLLoader().load 'models/3DBenchy.stl', (geometry)=>
             geometry.center()
             @mesh = new THREE.Mesh(geometry, @material)
@@ -32,12 +36,12 @@ class window.ThreejsSimplifier
             @mesh.receiveShadow = true
 
             @scene.add(@mesh)
-        @animate()
 
     setupCameraAndControls: ->
         @camera.updateProjectionMatrix()
         @camera.lookAt(new THREE.Vector3(0, 25, 0))
         @controls = new THREE.OrbitControls(@camera, @renderer.domElement)
+        @controls.autoRotate = true
         @camera.position.set(-135, 75, -135)
         @controls.update()
 
@@ -80,10 +84,14 @@ class window.ThreejsSimplifier
         window.requestAnimationFrame(=> @animate())
 
     render: ->
+        @controls.update()
         @renderer.render(@scene, @camera)
 
 
 
 $().ready ->
     new ThreejsSimplifier('#threejs')
+    # TODO:
     # after file changed/added hide jumbotron
+    # after canvas click, turn of autorotate
+    # add material wireframe
