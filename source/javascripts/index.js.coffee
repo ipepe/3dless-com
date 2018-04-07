@@ -193,7 +193,7 @@ $().ready ->
       file_name = file_input.files[0].name.slice(0, -4)
     else
       file_name = ''
-    file_name += '3dless_com_simplified.stl'
+    file_name += '_3dless_com_simplified.stl'
     window.saveAs(blob,  file_name)
 
 # TODO:
