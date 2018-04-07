@@ -3,24 +3,29 @@ title: Reduce STL File vertices. Simplify 3D model Online.
 ---
 == javascript_include_tag  :index
 .jumbotron
-  h1 Hello, world!
-  p You can simplify Your STL model here. Simply choose a file, and specify vertices amount You wish to have and save file.
+  / h1 Hello, world!
+  p You can simplify Your STL model here. Simply choose a file, and specify vertices amount You wish to have and save to file.
 .row
   .col-md-12
     .form-group
-      label for="file_input" STL Input file
-      input#file_input.form-control type="file"
+      label for="file_input" STL File
+      .row
+        .col-md-10: input#file_input.form-control type="file" accept=".stl"
+        .col-md-2: button.btn-default#save Save to file
 .row
   .col-md-12
     .form-group
-      label for="vertices_input" Vertices count
-      input.form-control type="number" id="vertices_input" value="100" min="1" max="100" step="1" required="required"
+      label for="vertices_range_input" Vertices count
+      .row
+        .col-md-10: input.form-control type="range" id="vertices_range_input" value="1000" min="1" max="1000" step="1" required="required"
+        .col-md-2: input.form-control type="number" id="vertices_number_input" value="0" disabled='disabled'
 .row
-  .col-md-12
-    #threejs
-.row
-  - [:x, :y, :z].each do |axis|
-    .col-md-4
-      .form-group
-        label for="rotation_#{axis}" Rotation #{axis.to_s.upcase}
-        input.form-control type="number" id="rotation_#{axis}" value="0" min="-360" max="360" step="15" required="required"
+  .col-md-12.threejs-container
+    #loader
+      #threejs
+/ .row
+/   - [:x, :y, :z].each do |axis|
+/     .col-md-4
+/       .form-group
+/         label for="rotation_#{axis}" Rotation #{axis.to_s.upcase}
+/         input.form-control type="number" id="rotation_#{axis}" value="0" min="-360" max="360" step="15" required="required"
