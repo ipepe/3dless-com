@@ -7,6 +7,7 @@ class window.ThreejsSimplifier
   original_geometry: null
   onGeometryChange: null
   controls: null
+  processing: false
 
   constructor: (threejs_selector, onGeometryChange)->
     @renderer = new THREE.WebGLRenderer(
@@ -36,16 +37,24 @@ class window.ThreejsSimplifier
     @animate()
 
   simplifyMeshTo: (vertices)->
-    return if $('.loader').hasClass('loader')
     if @mesh.children[0].geometry.vertices.length == vertices
       console.log('same vertices as requested')
+    else if vertices == @original_geometry.vertices.length
+      @createMesh(@original_geometry, false)
     else
+      return setTimeout (=> @simplifyMeshTo(vertices)), 50 if @processing
       console.log('simplifying', @original_geometry.vertices.length, 'to', vertices)
-      $('.loader').addClass('loader') if !@isFastProcessing()
-      original_geometry = @original_geometry.clone()
-      simplified_geometry = @simplifyModifier.modify(original_geometry, vertices)
-      simplified_geometry.computeFaceNormals()
-      @createMesh(simplified_geometry, false)
+      $('#loader').addClass('loader') if !@isFastProcessing()
+      @processing = true
+      processing = true
+      setTimeout (=>
+        original_geometry = @original_geometry.clone()
+        simplified_geometry = @simplifyModifier.modify(original_geometry, vertices)
+        simplified_geometry.computeFaceNormals()
+        @createMesh(simplified_geometry, false)
+        @processing = false
+      ), 50
+
 
   createMesh: (geometry, with_original=true)->
     if @mesh
@@ -67,18 +76,18 @@ class window.ThreejsSimplifier
     $('#loader').removeClass('loader')
 
   isFastProcessing: ->
-    !!@original_geometry?.vertices?.length > 8000
+    !!(@original_geometry?.vertices?.length < 8000)
 
   logSlider: (position, maxp=1000, minp=1)->
     position = parseInt(position)
     maxp = parseInt(maxp)
     minp = parseInt(minp)
-    minv = Math.log(50)
+    minv = Math.log(8)
     maxv = Math.log(@original_geometry.vertices.length)
     if position == minp
-      minv
+      8
     else if position == maxp
-      maxv
+      @original_geometry.vertices.length
     else
       scale = (maxv-minv) / (maxp-minp)
       parseInt(Math.exp(minv + scale*(position-minp)))
@@ -164,21 +173,19 @@ $().ready ->
 
   $(window).resize -> ThreejsApp.autosize()
 
-  simplifyNow = (e)->
-    vertices = ThreejsApp.logSlider(e.target.value, e.target.max, e.target.min)
-    $('#vertices_number_input').attr('value', vertices)
+  simplifyNow = (e, vertices)->
+    return if !ThreejsApp.isFastProcessing() && e.type != 'change'
     setTimeout((-> ThreejsApp.simplifyMeshTo(vertices)), 50)
 
-  debounceSimplify = debounce((e)-> simplifyNow(e))
+  debouncedSimplify = debounce(simplifyNow)
 
-  $('#vertices_range_input').on 'mousemove mouseover mousedown mouseup touch change', (e)->
-    if ThreejsApp.isFastProcessing()
-      debounceSimplify(e)
-    else
-      simplifyNow(e)
+  $('#vertices_range_input').on 'mousemove touchmove touchend mouseup change', (e)->
+    vertices = ThreejsApp.logSlider(e.target.value, e.target.max, e.target.min)
+    $('#vertices_number_input').attr('value', vertices)
+    debouncedSimplify(e, vertices)
 
   autoRotateOn = debounce((-> ThreejsApp.controls.autoRotate = true), 10*1000)
-  $('#threejs canvas').on 'click', ->
+  $('#threejs canvas').on 'mouseup touchend', ->
     ThreejsApp.controls.autoRotate = false
     autoRotateOn()
 
