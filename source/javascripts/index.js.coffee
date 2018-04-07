@@ -75,8 +75,13 @@ class window.ThreejsSimplifier
     minp = parseInt(minp)
     minv = Math.log(50)
     maxv = Math.log(@original_geometry.vertices.length)
-    scale = (maxv-minv) / (maxp-minp)
-    parseInt(Math.exp(minv + scale*(position-minp)))
+    if position == minp
+      minv
+    else if position == maxp
+      maxv
+    else
+      scale = (maxv-minv) / (maxp-minp)
+      parseInt(Math.exp(minv + scale*(position-minp)))
 
   loadDefaultModel: ->
     $('#loader').addClass('loader')
