@@ -194,6 +194,7 @@ $().ready ->
     $('.jumbotron').addClass('hidden')
     document.getElementById('vertices_range_input').value = 1000
     if e.target.files.length
+      setTimeout (-> ga('send', 'event', 'simplifier', 'filechosen')), 100
       fr = new FileReader()
       fr.onloadend = (evt)=>
         ThreejsApp.parseSTL(evt.target.result)
@@ -207,6 +208,7 @@ $().ready ->
       file_name = ''
     file_name += '_3dless_com_simplified.stl'
     window.saveAs(blob,  file_name)
+    setTimeout (-> ga('send', 'event', 'simplifier', 'filesaved')), 100
 
 # TODO:
 # add material wireframe
