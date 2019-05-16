@@ -1,8 +1,8 @@
 ---
-title: Reduce STL File vertices. Simplify 3D mesh model Online.
-keywords: quickly,reduce,polygon,count,3D,model,number,faces,mesh,poly,count,stl,obj,gcode,reduction,simplify,vertices
+title: Preview multiple gcode files in one scene.
+keywords: quickly,preview,multiple,gcode,files,in,3D,model,number,faces,mesh,poly,count,stl,obj,vertices
 ---
-== javascript_include_tag  :index
+== javascript_include_tag  :gcode
 .jumbotron
   / h1 Hello, world!
   p You can simplify Your STL model here (using vertice reduction). Simply choose a file, and specify vertices amount You wish to have and save to file.
@@ -11,7 +11,7 @@ keywords: quickly,reduce,polygon,count,3D,model,number,faces,mesh,poly,count,stl
 .row
   .col-md-12
     .form-group
-      label for="file_input" STL File
+      label for="file_input" multiple="multiple" STL File
       .row
         .col-md-10: input#file_input.form-control type="file" accept=".stl"
         .col-md-2: button.btn.btn-primary#save Save to file
