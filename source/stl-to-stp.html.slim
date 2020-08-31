@@ -13,3 +13,26 @@ keywords: quickly,convert,3D,model,stl,file,mesh,obj,gcode,online,step,stp,solid
       .form-group
         input.form-control type="file" name="input" required="required"
       button type="submit" class="btn btn-default" Upload and Convert
+
+#myModal.modal.fade aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        button.close aria-label="Close" data-dismiss="modal" type="button"
+          span aria-hidden="true"  &times;
+        h1#myModalLabel.modal-title Warning!
+      .modal-body
+        p Because of increased usage of this service, server hosting cost is starting to exceed my hobby budget.
+        strong This converter service might become unavailable soon! Please consider using:
+        ul
+          li
+            a href="https://github.com/slugdev/stltostp/releases/download/v1.0.1/stltostp-1.0.1-win64.msi" Windows binary
+          li
+            a href="https://github.com/ipepe-oss/stltostp#linux-building-from-source" Building Linux binary from source
+          li
+            a href="https://github.com/ipepe-oss/stltostp#docker" Run docker container with simple HTTP API
+        p Thank You for understanding!
+      .modal-footer
+        a.btn.btn-default data-dismiss="modal" type="button"  Close
+javascript:
+  $('#myModal').modal('show')

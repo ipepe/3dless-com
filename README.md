@@ -2,7 +2,7 @@
 3Dless.com
 
 # This project uses middleman.
-Before commiting please run `middleman build`.
+Before commiting please run `bundle exec middleman build`.
 
-To start develpoment server `middleman server`
+To start develpoment server `bundle exec middleman server`
  
